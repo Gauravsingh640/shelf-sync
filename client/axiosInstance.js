@@ -1,11 +1,11 @@
 import axios from "axios";
 
 export const bookBaseUrl = axios.create({
-  baseURL: "https://todo-t1lc.onrender.com/book",
+  baseURL: "http://localhost:8000/book",
 });
 
 export const userBaseUrl = axios.create({
-  baseURL: "https://todo-t1lc.onrender.com/user",
+  baseURL: "http://localhost:8000/user",
 });
 
 bookBaseUrl.interceptors.request.use(
