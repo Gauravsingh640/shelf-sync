@@ -10,7 +10,10 @@ databaseConnection();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: "https://shelf-sync-mtq5.vercel.app/login",
+  credentials: true
+}));
 
 app.use((req,res,next)=>{
    console.log(`${req.method} ${req.url}`);
