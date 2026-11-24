@@ -1,9 +1,0 @@
-[33mf2d46d9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{0}: commit: fix the bugs
-[33m4ee4477[m HEAD@{1}: commit: updated cors
-[33m18af8a3[m HEAD@{2}: commit: updated cors
-[33mb583acd[m HEAD@{3}: commit: updated cors
-[33ma17d57d[m HEAD@{4}: commit: update backend link
-[33m32f383a[m HEAD@{5}: commit: added backend routes
-[33ma679bea[m HEAD@{6}: Branch: renamed refs/heads/main to refs/heads/main
-[33ma679bea[m HEAD@{8}: Branch: renamed refs/heads/main to refs/heads/main
-[33ma679bea[m HEAD@{10}: clone: from https://github.com/Gauravsingh640/Shelf-sync.git
