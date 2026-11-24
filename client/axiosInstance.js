@@ -3,11 +3,11 @@ import axios from "axios";
 
 // Axios instances
 export const bookBaseUrl = axios.create({
-  baseURL: "http://localhost:8000/book",
+  baseURL: "https://shelf-sync-2.onrender.com/book",
 });
 
 export const userBaseUrl = axios.create({
-  baseURL: "http://localhost:8000/user",
+  baseURL: "https://shelf-sync-2.onrender.com/user",
 });
 
 // Request Interceptor
