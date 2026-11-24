@@ -1,32 +1,56 @@
+
 import axios from "axios";
 
+// Axios instances
 export const bookBaseUrl = axios.create({
-  baseURL: "https://shelf-sync-backend.onrender.com/book",
+  baseURL: "http://localhost:8000/book",
 });
 
 export const userBaseUrl = axios.create({
-  baseURL: "https://shelf-sync-backend.onrender.com/user",
+  baseURL: "http://localhost:8000/user",
 });
 
+// Request Interceptor
+// JWT token automatically attach hoga protected book APIs ke saath
 bookBaseUrl.interceptors.request.use(
   (config) => {
-    const authToken = localStorage.getItem("userAuth");
-    const token = JSON.parse(authToken)?.token;
+    try {
+      const authData = JSON.parse(
+        localStorage.getItem("userAuth") || "null"
+      );
 
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
+      const token = authData?.token;
+
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    } catch (error) {
+      console.error("Auth token error:", error);
+      localStorage.removeItem("userAuth");
     }
 
     return config;
   },
   (error) => {
-    console.log("auth-req-errr", error);
+    return Promise.reject(error);
   }
 );
 
-bookBaseUrl.interceptors.response.use((response)=> response, (error)=>{
-  if(error.response && error.response.status === 401){
-    localStorage.removeItem('userAuth');
-    window.location.href = '/login'
+// Response Interceptor
+// 401 Unauthorized aane par user ko login page par redirect karenge
+bookBaseUrl.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem("userAuth");
+
+      if (window.location.pathname !== "/login") {
+        window.location.href = "/login";
+      }
+    }
+
+    return Promise.reject(error);
   }
-})
+);
