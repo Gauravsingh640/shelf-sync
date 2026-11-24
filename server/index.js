@@ -12,47 +12,52 @@ const authMiddleWare = require("./middleware/auth.middleware");
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://shelf-sync-iota.vercel.app",
+];
+
 const corsOptions = {
-  origin: "https://shelf-sync-iota.vercel.app/",
+  origin: (origin, callback) => {
+    // Allow requests without an Origin header (e.g. Postman)
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error("Not allowed by CORS"));
+  },
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
 };
 
-// CORS middleware - must be before routes
 app.use(cors(corsOptions));
 
-// Handle preflight requests (Express 5 compatible)
-app.options(/.*/, cors(corsOptions));
-
-// Body parser
 app.use(express.json());
 
-// Request logger
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
   next();
 });
 
-// Test route
 app.get("/", (req, res) => {
-  res.send("Backend Running Successfully ✅");
+  res.send("ShelfSync Backend Running Successfully 🚀");
 });
 
-// Routes
 app.use("/user", userRouter);
 app.use("/book", authMiddleWare, bookRouter);
 
-// Start server after database connection
 const startServer = async () => {
   try {
     await databaseConnection();
 
-    app.listen(8000, () => {
-      console.log("Server running on http://localhost:8000 ✅");
+    const PORT = process.env.PORT || 8000;
+
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT} 🚀`);
     });
   } catch (error) {
-    console.log("Server startup failed ❌", error.message);
+    console.log("Server startup failed:", error.message);
     process.exit(1);
   }
 };
