@@ -13,7 +13,7 @@ const authMiddleWare = require("./middleware/auth.middleware");
 const app = express();
 
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "https://shelf-sync-iota.vercel.app/",
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
